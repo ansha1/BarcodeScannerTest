@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+  <dimen name="bjss_standard_padding">64dp</dimen>
+  <dimen name="bjss_half_standard_padding">32dp</dimen>
+  <dimen name="small_padding">8dp</dimen>
+  <dimen name="bjss_quarter_standard_padding">16dp</dimen>
+</resources>

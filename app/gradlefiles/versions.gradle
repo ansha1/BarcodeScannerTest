@@ -1,0 +1,15 @@
+
+project.ext {
+  supportLibVersion = '25.0.1'
+  gsonVersion = '2.8.0'
+  retrofitVersion = '2.1.0'
+  daggerVersion = '2.6'
+  butterKnifeVersion = '8.4.0'
+  autoValueVersion = '1.2'
+  autoValueParcelVersion = '0.2.5'
+  autoValueGsonVersion = '0.4.4'
+  permissionDispatcher = '2.2.0'
+  testRunnerVersion = '0.5'
+  espressoVersion = '2.2.2'
+  junitVersion = '4.12'
+}

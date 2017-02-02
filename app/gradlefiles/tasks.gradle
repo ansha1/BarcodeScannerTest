@@ -1,0 +1,85 @@
+task pmd(type: Pmd) {
+  ruleSetFiles = files("${project.rootDir}/config/pmd/pmd-ruleset.xml")
+  ignoreFailures = false
+  ruleSets = []
+
+  source 'src'
+  include '**/*.java'
+  exclude '**/gen/**'
+  exclude '**/test/**'
+
+  reports {
+    xml.enabled = false
+    html.enabled = true
+    xml {
+      destination "$project.buildDir/reports/pmd/pmd.xml"
+    }
+    html {
+      destination "$project.buildDir/reports/pmd/pmd.html"
+    }
+  }
+}
+
+task checkCodingStyle(type: Checkstyle) {
+  description 'Runs Checkstyle inspection against Android sourcesets.'
+  group = 'Code Quality'
+  ignoreFailures = false
+  showViolations = false
+  source 'src'
+  include '**/*.java'
+  exclude '**/gen/**'
+  exclude '**/R.java'
+  exclude '**/BuildConfig.java'
+  reports {
+    xml.destination "$project.buildDir/reports/checkstyle/report.xml"
+  }
+  classpath = files()
+  configFile = file("${rootProject.rootDir}/config/checkstyle/checkstyle.xml")
+}
+
+
+task checkWithFindBugs(type: org.gradle.api.plugins.quality.FindBugs) {
+  description 'Runs static analysis with FindBugs'
+  ignoreFailures true
+
+  classes = files('build/intermediates/classes')
+  excludeFilter = file('findbugs/android-findbugs-exclude.xml')
+  classpath = files()
+  effort = 'max'
+  source 'src'
+  include '**/*.java'
+  exclude '**/gen/**'
+
+
+  reports {
+    xml.enabled = false
+    html.enabled = true
+
+    xml {
+      xml.withMessages true
+      destination 'findbugs/reports.xml'
+    }
+
+    html {
+      destination 'findbugs/reports.html'
+    }
+  }
+
+  finalizedBy {
+    printFindBugsReport
+  }
+}
+
+task printFindBugsReport << {
+  def xmlReport = file('findbugs/reports.xml')
+  if (xmlReport.exists()) {
+    def slurped = new XmlSlurper().parse(xmlReport)
+    if (slurped.BugInstance.size() > 0) {
+      println "FINDBUGS VIOLATIONS----------START"
+      slurped.BugInstance.each { bug ->
+        println "${bug.LongMessage} (priority=${bug.@priority})"
+      }
+      println "FINDBUGS VIOLATIONS------------END"
+    }
+  }
+}

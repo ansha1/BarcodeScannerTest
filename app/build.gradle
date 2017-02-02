@@ -1,0 +1,111 @@
+apply plugin: 'com.android.application'
+apply plugin: 'checkstyle'
+
+checkstyle{
+  toolVersion '7.5.1'
+}
+
+apply plugin: 'findbugs'
+apply plugin: 'pmd'
+
+
+def gitSha = exec('git rev-parse --short HEAD', "unknown");
+def gitCommitCount = 100 + Integer.parseInt(exec('git rev-list --count HEAD', "-1"))
+def gitTag = exec('git describe --tags', stringify(gitCommitCount))
+def gitTimestamp = exec('git log -n 1 --format=%at', -1)
+
+def appId = "com.bjss.precomsample"
+def isCi = "true".equals(System.getenv("CI"))
+
+// Uncomment if you wish to enable Jack & Java8
+// apply from: 'jack.gradle'
+
+// Uncomment if you wish to enable Sonar
+//apply from: 'sonar.gradle'
+
+apply from: 'gradlefiles/tasks.gradle'
+apply from: 'gradlefiles/versions.gradle'
+apply from: 'gradlefiles/dependencies.gradle'
+
+android {
+  compileSdkVersion 25
+  buildToolsVersion "25.0.2"
+
+  defaultConfig {
+    applicationId appId
+    minSdkVersion 16
+    targetSdkVersion 25
+
+    versionCode gitCommitCount
+    versionName gitTag
+
+    testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+
+    buildConfigField 'String', 'GIT_SHA', "\"${gitSha}\""
+    buildConfigField 'long', 'GIT_TIMESTAMP', "${gitTimestamp}L"
+  }
+
+  buildTypes {
+    debug {
+      applicationIdSuffix '.debug'
+    }
+    release {
+      minifyEnabled false
+      proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+    }
+    qa.initWith(buildTypes.release)
+    qa {
+      applicationIdSuffix '.qa'
+      debuggable true
+    }
+  }
+
+  lintOptions {
+    abortOnError false
+  }
+
+
+
+}
+
+configurations.all {
+  resolutionStrategy {
+    force "com.android.support:support-annotations:$supportLibVersion"
+    force "com.squareup.okhttp3:okhttp:3.4.1"
+    force "com.squareup:okio:1.9.0"
+    force "com.google.guava:guava:19.0"
+  }
+}
+
+
+def stringify(int versionCode) {
+  def builder = new StringBuilder();
+  def dot = ""
+  String.valueOf(versionCode).toCharArray().each {
+    builder.append(dot)
+    builder.append(it)
+    dot = "."
+  }
+  return builder.toString()
+}
+
+def exec(String command, Object fallback = null) {
+  def cmd = command.execute([], project.rootDir)
+  cmd.waitFor()
+  if (cmd.exitValue() != 0) {
+    if (fallback == null) {
+      throw new RuntimeException("'$command' failed: $cmd.errorStream.text")
+    } else {
+      return fallback
+    }
+  }
+  return cmd.text.trim()
+}
+
+if (isCi) {
+  build.finalizedBy(checkCodingStyle)
+  build.finalizedBy(checkWithFindBugs)
+  build.finalizedBy(pmd)
+  build.finalizedBy(lint)
+}
+

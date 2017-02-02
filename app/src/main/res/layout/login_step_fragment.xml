@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/root"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    >
+
+  <android.support.v7.widget.Toolbar
+      android:id="@+id/toolbar"
+      android:layout_width="match_parent"
+      android:layout_height="?android:attr/actionBarSize"
+      android:layout_alignParentTop="true"
+      android:background="@color/colorPrimary"
+      ></android.support.v7.widget.Toolbar>
+
+  <LinearLayout
+      android:layout_below="@+id/toolbar"
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:orientation="vertical"
+      android:paddingLeft="@dimen/bjss_half_standard_padding"
+      android:paddingRight="@dimen/bjss_half_standard_padding"
+      >
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/hi_sam"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/please_confirm_your_mail_center_and_shift"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        />
+
+  </LinearLayout>
+
+  <LinearLayout
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:layout_centerInParent="true"
+      android:orientation="vertical"
+      android:paddingLeft="@dimen/bjss_half_standard_padding"
+      android:paddingRight="@dimen/bjss_half_standard_padding"
+      >
+
+    <Spinner
+        android:id="@+id/location"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        ></Spinner>
+
+    <com.bjss.precomsample.additionalloginstep.view.ShiftSelector
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        ></com.bjss.precomsample.additionalloginstep.view.ShiftSelector>
+
+    <Spinner
+        android:id="@+id/workarea"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        ></Spinner>
+  </LinearLayout>
+
+  <TextView
+      android:id="@+id/confirm"
+      android:layout_width="match_parent"
+      android:layout_height="?android:attr/actionBarSize"
+      android:layout_alignParentBottom="true"
+      android:background="@android:color/holo_red_light"
+      android:gravity="center"
+      android:text="CONFIRM"
+      android:textAppearance="?android:attr/textAppearanceLarge"
+      android:textStyle="bold"
+      ></TextView>
+
+</RelativeLayout>

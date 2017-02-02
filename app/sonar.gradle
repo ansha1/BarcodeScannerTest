@@ -1,0 +1,27 @@
+buildscript {
+  repositories {
+    mavenCentral()
+  }
+  dependencies { classpath 'org.sonarsource.scanner.gradle:sonarqube-gradle-plugin:2.2.1' }
+}
+
+apply plugin: org.sonarqube.gradle.SonarQubePlugin
+
+def sonarUrl = 'http://10.161.153.24:9000'
+def sonarProfile = 'BJSS_Android'
+
+sonarqube {
+  properties {
+    property "sonar.projectName", "$appId (Android)"
+    property "sonar.projectKey", "$appId"
+    property "sonar.projectVersion", "$gitTag"
+    property "sonar.profile", "$sonarProfile"
+    property "sonar.sourceEncoding", "UTF-8"
+    property "sonar.sources", "src"
+    property "sonar.exclusions", "build/**,res/**"
+    property "sonar.import_unknown_files", true
+    property "sonar.java.binaries", "build/intermediates/classes"
+    property "sonar.android.lint.report", "./build/outputs/lint-results.xml"
+    property "sonar.host.url", "$sonarUrl"
+  }
+}

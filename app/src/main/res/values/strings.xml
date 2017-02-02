@@ -1,0 +1,12 @@
+<resources>
+  <string name="app_name">PreComSample</string>
+  <string name="please_confirm_your_mail_center_and_shift">Please confirm your mail center and shift</string>
+  <string name="hi_sam">Hi Sam,</string>
+  <string name="error_getting_mail_centre">Error getting mail centre</string>
+  <string name="error_getting_shift">Error getting shift</string>
+  <string name="plase_select_location">Plase select location</string>
+  <string name="please_select_shift">Please select shift</string>
+  <string name="traffic_transformation_app">Traffic Transformation App</string>
+  <string name="by_signing_in_you_agree_to_our_n_terms_and_privacy_policies">By signing in you agree to our\n terms and privacy policies</string>
+  <string name="shift">Shift:</string>
+</resources>
