@@ -1,6 +1,6 @@
 <ApplicationSettings>
     <Communication>
-        <ServerUri>---sorry this has been deleted---</ServerUri>
+        <ServerUri>http://51.140.32.154:8081/</ServerUri>
         <QueuePollPeriod>20</QueuePollPeriod>
         <MaxCachedCredentials>2</MaxCachedCredentials>
         <ConnectAtStartup>true</ConnectAtStartup>

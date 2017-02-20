@@ -9,7 +9,7 @@ import se.precom.login.ui.LoginFragment;
     super.initializeControls(view);
 
     // hard code login for development
-    setUsername("--deleted--");
-    setPassword("--deleted--");
+    setUsername("User");
+    setPassword("PreCom4!");
   }
 }
