@@ -1,6 +1,6 @@
 <ApplicationSettings>
     <Communication>
-        <ServerUri>http://51.140.32.154:8081/</ServerUri>
+        <ServerUri>http://51.140.31.49:8082/</ServerUri>
         <QueuePollPeriod>20</QueuePollPeriod>
         <MaxCachedCredentials>2</MaxCachedCredentials>
         <ConnectAtStartup>true</ConnectAtStartup>
